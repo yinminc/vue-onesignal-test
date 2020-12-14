@@ -22,6 +22,7 @@ import '@ionic/vue/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 
 const app = createApp(App)
   .use(IonicVue)
@@ -30,3 +31,22 @@ const app = createApp(App)
 router.isReady().then(() => {
   app.mount('#app');
 });
+
+// OneSignal
+const oneSignal = new OneSignal();
+
+oneSignal.setLogLevel({logLevel: 6, visualLevel: 4});
+
+oneSignal.startInit('b9f3abb5-b396-4e9e-bd73-c164c5f2ea7b', '')
+
+oneSignal.inFocusDisplaying(oneSignal.OSInFocusDisplayOption.InAppAlert);
+
+oneSignal.handleNotificationReceived().subscribe(() => {
+  // do something when notification is received
+});
+
+oneSignal.handleNotificationOpened().subscribe(() => {
+  // do something when a notification is opened
+});
+
+oneSignal.endInit();
